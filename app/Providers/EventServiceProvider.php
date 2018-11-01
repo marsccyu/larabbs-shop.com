@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Listeners\RegisteredListener;
+use Illuminate\Auth\Events\Registered;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,14 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\Event' => [
             'App\Listeners\EventListener',
+        ],
+        /**
+         *  關聯註冊動作(Registered) 至 監聽器(RegisteredListener)
+         *  在 framework\src\Illuminate\Foundation\Auth\RegistersUsers.php : 33 中
+         *  由 Laravel 自帶的 Auth 模塊觸發監聽器
+         */
+        Registered::class => [
+            RegisteredListener::class,
         ],
     ];
 
