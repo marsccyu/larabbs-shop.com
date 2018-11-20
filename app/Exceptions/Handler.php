@@ -11,9 +11,10 @@ class Handler extends ExceptionHandler
      * A list of the exception types that are not reported.
      *
      * @var array
+     * 當一個異常被觸發時，Laravel 會去檢查這個異常的類型是否在 $dontReport 屬性中定義了，如果有則不會打印到日誌文件中。
      */
     protected $dontReport = [
-        //
+        InvalidRequestException::class,
     ];
 
     /**
