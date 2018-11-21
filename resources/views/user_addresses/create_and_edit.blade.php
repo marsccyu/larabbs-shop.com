@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '新增收件地址')
+@section('title', ($address->id ? '修改': '新增') . '收件地址')
 
 @section('content')
     <div class="row">
@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="text-center">
-                        新增收件地址
+                        {{ $address->id ? '修改': '新增' }}收件地址
                     </h2>
                 </div>
                 <div class="panel-body">
@@ -21,38 +21,43 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form-horizontal" role="form" action="{{ route('user_addresses.store')  }}" method="post">
+                    @if($address->id)
+                        <form class="form-horizontal" role="form" action="{{ route('user_addresses.update', ['user_address' => $address->id]) }}" method="post">
+                        {{ method_field('PUT') }}
+                    @else
+                        <form class="form-horizontal" role="form" action="{{ route('user_addresses.store') }}" method="post">
+                    @endif
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label class="control-label col-sm-2">市區路</label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="city">
+                                <select class="form-control" name="province">
                                     <option value="">選擇市</option>
-                                    <option value="台北市">台北市</option>
-                                    <option value="新北市">新北市</option>
-                                    <option value="台中市">台中市</option>
-                                    <option value="高雄市">高雄市</option>
-                                    <option value="台南市">台南市</option>
+                                    <option value="台北市" @if ($address->province == '台北市') selected @endif>台北市</option>
+                                    <option value="新北市" @if ($address->province == '新北市') selected @endif>新北市</option>
+                                    <option value="台中市" @if ($address->province == '台中市') selected @endif>台中市</option>
+                                    <option value="高雄市" @if ($address->province == '高雄市') selected @endif>高雄市</option>
+                                    <option value="台南市" @if ($address->province == '台南市') selected @endif>台南市</option>
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control" name="area">
+                                <select class="form-control" name="city">
                                     <option value="">選擇區</option>
-                                    <option value="中正區">中正區</option>
-                                    <option value="蘆洲區">蘆洲區</option>
-                                    <option value="中一區">中一區</option>
-                                    <option value="南區">南區</option>
-                                    <option value="北區">北區</option>
+                                    <option value="中正區" @if ($address->city == '中正區') selected @endif>中正區</option>
+                                    <option value="蘆洲區" @if ($address->city == '蘆洲區') selected @endif>蘆洲區</option>
+                                    <option value="中一區" @if ($address->city == '中一區') selected @endif>中一區</option>
+                                    <option value="南區" @if ($address->city == '南區') selected @endif>南區</option>
+                                    <option value="北區" @if ($address->city == '北區') selected @endif>北區</option>
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control" name="road">
+                                <select class="form-control" name="district">
                                     <option value="">選擇路</option>
-                                    <option value="中山路">中山路</option>
-                                    <option value="民族路">民族路</option>
-                                    <option value="中港路">中港路</option>
-                                    <option value="成功北路">成功北路</option>
-                                    <option value="花田路">花田路</option>
+                                    <option value="中山路" @if ($address->district == '中山路') selected @endif>中山路</option>
+                                    <option value="民族路" @if ($address->district == '民族路') selected @endif>民族路</option>
+                                    <option value="中港路" @if ($address->district == '中港路') selected @endif>中港路</option>
+                                    <option value="成功北路" @if ($address->district == '成功北路') selected @endif>成功北路</option>
+                                    <option value="花田路" @if ($address->district == '花田路') selected @endif>花田路</option>
                                     <option></option>
                                 </select>
                             </div>

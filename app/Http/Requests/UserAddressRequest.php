@@ -8,9 +8,9 @@ class UserAddressRequest extends Request
     public function attributes()
     {
         return [
-            'city'      => '市',
-            'area'          => '區',
-            'road'      => '路',
+            'province'      => '市',
+            'city'          => '區',
+            'district'      => '路',
             'address'       => '详细地址',
             'zip'           => '邮编',
             'contact_name'  => '姓名',
@@ -21,9 +21,9 @@ class UserAddressRequest extends Request
     public function rules()
     {
         return [
-            'city'      => 'required',
-            'area'          => 'required',
-            'road'      => 'required',
+            'province'      => 'required',
+            'city'          => 'required',
+            'district'      => 'required',
             'address'       => 'required',
             'zip'           => 'required',
             'contact_name'  => 'required',

@@ -2,6 +2,7 @@
 
 * [Laravel-mix](https://laravel-mix.com/docs/2.1/installation) : 資源任務編譯器
 * [Laravel-lang](https://github.com/overtrue/laravel-lang/) : 語言包  
+* [Sweetalert](http://mishengqiang.com/sweetalert/) : 美化瀏覽器彈出視窗 (npm)  
 
 <br>
 
