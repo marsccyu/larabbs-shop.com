@@ -1,6 +1,7 @@
 # Plugins
 
 * [Laravel-mix](https://laravel-mix.com/docs/2.1/installation) : 資源任務編譯器
+* [Laravel-lang](https://github.com/overtrue/laravel-lang/) : 語言包  
 
 <br>
 
@@ -21,5 +22,24 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .version();
 ```
 
+
+<br><br>
+
+## Laravel-lang
+
+#### Installation
+
+將訊息轉換成不同地區語言的語言包。
+
+```
+composer require "overtrue/laravel-lang:~3.0"
+```
+<br />
+
+`config/app.php`
+
+```
+'locale' => 'zh-CN',
+```
 
 <br><br>
