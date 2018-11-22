@@ -78,6 +78,7 @@ class UsersController extends Controller
             // 不在每一行后面展示编辑按钮
             $actions->disableEdit();
         });
+        $grid->disableActions();
 
         $grid->tools(function ($tools) {
             // 禁用批量删除按钮
