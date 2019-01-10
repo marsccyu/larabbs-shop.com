@@ -14,9 +14,13 @@
                             <div class="title">{{ $product->title }}</div>
                             <div class="price"><label>價格</label><em>￥</em><span>{{ $product->price }}</span></div>
                             <div class="sales_and_reviews">
-                                <div class="sold_count">累積銷售量 <span class="count">{{ $product->sold_count }}</span></div>
-                                <div class="review_count">累積評價 <span class="count">{{ $product->review_count }}</span></div>
-                                <div class="rating" title="评分 {{ $product->rating }}">评分 <span class="count">{{ str_repeat('★', floor($product->rating)) }}{{ str_repeat('☆', 5 - floor($product->rating)) }}</span></div>
+                                <div class="sold_count">累積銷售量 <span class="count">{{ $product->sold_count }}</span>
+                                </div>
+                                <div class="review_count">累積評價 <span class="count">{{ $product->review_count }}</span>
+                                </div>
+                                <div class="rating" title="评分 {{ $product->rating }}">评分 <span
+                                        class="count">{{ str_repeat('★', floor($product->rating)) }}{{ str_repeat('☆', 5 - floor($product->rating)) }}</span>
+                                </div>
                             </div>
                             <div class="skus">
                                 <label>選擇</label>
@@ -29,7 +33,8 @@
                                             data-toggle="tooltip"
                                             title="{{ $sku->description }}"
                                             data-placement="bottom">
-                                            <input type="radio" name="skus" autocomplete="off" value="{{ $sku->id }}"> {{ $sku->title }}
+                                            <input type="radio" name="skus" autocomplete="off"
+                                                   value="{{ $sku->id }}"> {{ $sku->title }}
                                         </label>
                                     @endforeach
                                 </div>
@@ -41,15 +46,22 @@
                                 <span class="stock"></span>
                             </div>
                             <div class="buttons">
-                                <button class="btn btn-success btn-favor">❤ 收藏</button>
-                                <button class="btn btn-primary btn-add-to-cart">加入購物車</button>
+                                @if($favored)
+                                    <button class="btn btn-danger btn-disfavor">取消收藏</button>
+                                @else
+                                    <button class="btn btn-success btn-favor">❤ 收藏</button>
+                                @endif
+                                <button class="btn btn-primary btn-add-to-cart">加入购物车</button>
                             </div>
                         </div>
                     </div>
                     <div class="product-detail">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#product-detail-tab" aria-controls="product-detail-tab" role="tab" data-toggle="tab">商品詳情</a></li>
-                            <li role="presentation"><a href="#product-reviews-tab" aria-controls="product-reviews-tab" role="tab" data-toggle="tab">用戶評價</a></li>
+                            <li role="presentation" class="active"><a href="#product-detail-tab"
+                                                                      aria-controls="product-detail-tab" role="tab"
+                                                                      data-toggle="tab">商品詳情</a></li>
+                            <li role="presentation"><a href="#product-reviews-tab" aria-controls="product-reviews-tab"
+                                                       role="tab" data-toggle="tab">用戶評價</a></li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="product-detail-tab">
@@ -72,6 +84,41 @@
             $('.sku-btn').click(function () {
                 $('.product-info .price span').text($(this).data('price'));
                 $('.product-info .stock').text('庫存：' + $(this).data('stock') + '件');
+            });
+
+            // 监听收藏按钮的点击事件
+            $('.btn-favor').click(function () {
+                // 发起一个 post ajax 请求，请求 url 通过后端的 route() 函数生成。
+                axios.post('{{ route('products.favor', [
+                        'product' => $product->id
+                    ]) }}')
+                    .then(function () { // 请求成功会执行这个回调
+                        swal('操作成功', '', 'success')
+                            .then(function () {
+                                location.reload();
+                            });
+                    }, function (error) { // 请求失败会执行这个回调
+                        // 如果返回码是 401 代表没登录
+                        if (error.response && error.response.status === 401) {
+                            swal('請先登入', '', 'error');
+                        } else if (error.response && error.response.data.msg) {
+                            // 其他有 msg 字段的情况，将 msg 提示给用户
+                            swal(error.response.data.msg, '', 'error');
+                        } else {
+                            // 其他情况应该是系统挂了
+                            swal('系統錯誤', '', 'error');
+                        }
+                    });
+            });
+
+            $('.btn-disfavor').click(function () {
+                axios.delete('{{ route('products.disfavor', ['product' => $product->id]) }}')
+                    .then(function () {
+                        swal('操作成功', '', 'success')
+                            .then(function () {
+                                location.reload();
+                            });
+                    });
             });
         });
     </script>
