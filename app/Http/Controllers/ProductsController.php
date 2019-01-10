@@ -27,6 +27,13 @@ class ProductsController extends Controller
         return [];
     }
 
+    public function favorites(Request $request)
+    {
+        $products = $request->user()->favoriteProducts()->paginate(16);
+
+        return view('products.favorites', ['products' => $products]);
+    }
+
     public function index(Request $request)
     {
         // 创建一个查询构造器

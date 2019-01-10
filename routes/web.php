@@ -5,7 +5,8 @@ Route::get('/', 'PagesController@root')->name('root');
 // 將首頁導致商品列表頁
 Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
+// 會跟下方的收藏路由衝突，故使用條件表達只篩選出數字的路由
+Route::get('products/{product}', 'ProductsController@show')->name('products.show')->where(['product' => '[0-9]+']);
 
 Auth::routes();
 
@@ -25,5 +26,6 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
         Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+        Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
     });
 });
