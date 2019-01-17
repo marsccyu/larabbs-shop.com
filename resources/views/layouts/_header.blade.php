@@ -20,6 +20,9 @@
                 <li><a href="{{ route('login') }}">Sign in</a></li>
                 <li><a href="{{ route('register') }}">Sign up</a></li>
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link mt-1" href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"></i></a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
@@ -35,7 +38,7 @@
                                 <a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                    退出登录
+                                    退出
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
