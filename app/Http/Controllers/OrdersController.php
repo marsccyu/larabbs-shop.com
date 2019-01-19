@@ -24,6 +24,17 @@ class OrdersController extends Controller
         return view('orders.index', ['orders' => $orders]);
     }
 
+    public function show(Order $order, Request $request)
+    {
+        $this->authorize('own', $order);
+
+        /**
+         * load() 方法與​​with() 預加載方法有些類似，稱為延遲預加載
+         * 不同點在於load() 是在已經查詢出來的模型上調用，而with() 則是在ORM查詢構造器上調用。
+         */
+        return view('orders.show', ['order' => $order->load(['items.productSku', 'items.product'])]);
+    }
+
     public function store(OrderRequest $request)
     {
         $user  = $request->user();
@@ -86,4 +97,6 @@ class OrdersController extends Controller
 
         return $order;
     }
+
+
 }
