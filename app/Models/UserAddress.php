@@ -25,7 +25,7 @@ class UserAddress extends Model
 
     /**
      * 建立訪問器 (https://laravel-china.org/docs/laravel/5.6/eloquent-mutators/1406#accessors-and-mutators)
-     * 透過 UserAddress->full_address 訪問此函式
+     * 透過 UserAddress->full_address 訪問此函式 會回傳組合好的長串地址
      * @return string
      */
     public function getFullAddressAttribute()

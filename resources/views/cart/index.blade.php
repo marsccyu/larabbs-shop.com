@@ -126,8 +126,8 @@
             $('.btn-create-order').click(function () {
                 // 构建请求参数，将用户选择的地址的 id 和备注内容写入请求参数
                 var req = {
-                    address_id: $('#order-form').find('select[name=address]').val(),
                     items: [],
+                    address_id: $('#order-form').find('select[name=address]').val(),
                     remark: $('#order-form').find('textarea[name=remark]').val(),
                 };
                 // 遍历 <table> 标签内所有带有 data-id 属性的 <tr> 标签，也就是每一个购物车中的商品 SKU
