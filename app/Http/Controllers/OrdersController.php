@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Jobs\CloseOrder;
 use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Http\Requests\OrderRequest;
@@ -63,6 +64,11 @@ class OrdersController extends Controller
             $skuIds = collect($items)->pluck('sku_id');
             $user->cartItems()->whereIn('product_sku_id', $skuIds)->delete();
 
+            /**
+             * 觸發檢查訂單狀態的任務，意即用戶下單後 order_ttl 後秒執行任務檢查
+             * 若用戶在 order_ttl 內未結帳完成則執行訂單取消並加回庫存
+             */
+            $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
             return $order;
         });
 
