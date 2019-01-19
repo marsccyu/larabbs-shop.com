@@ -4,6 +4,7 @@
 * [Laravel-lang](https://github.com/overtrue/laravel-lang/) : 語言包  
 * [Sweetalert](http://mishengqiang.com/sweetalert/) : 美化瀏覽器彈出視窗 (npm)  
 * [Laravel-Admin](https://github.com/z-song/laravel-admin) : 管理後台  
+* [Redis](https://redis.io/) : Redis (6.5節中隊列驅動需使用)
 
 <br>
 
@@ -70,3 +71,19 @@ php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
 ```
 
 <br><br>
+
+## Redis
+
+#### Installation
+
+```
+composer require predis/predis
+```
+
+change `.env` file option : 
+
+```php
+QUEUE_DRIVER=redis
+```
+
+
