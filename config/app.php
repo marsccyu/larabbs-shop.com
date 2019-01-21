@@ -214,5 +214,5 @@ return [
 
     ],
 
-    'order_ttl' => 30,
+    'order_ttl' => 60,
 ];

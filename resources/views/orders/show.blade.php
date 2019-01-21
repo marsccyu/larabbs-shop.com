@@ -89,7 +89,7 @@
                             <!-- 支付按钮开始 -->
                             @if(!$order->paid_at && !$order->closed)
                                 <div class="payment-buttons">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('payment.alipay', ['order' => $order->id]) }}">支付寶支付</a>
+                                    <a class="btn btn-primary btn-sm" href="#">支付寶支付</a>
                                     <!-- 把之前的微信支付按钮换成这个 -->
                                     <button class="btn btn-sm btn-success" id='btn-wechat'>微信支付</button>
                                 </div>
