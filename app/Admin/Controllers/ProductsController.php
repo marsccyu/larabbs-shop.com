@@ -2,14 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Product;
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use App\Models\Product;
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Layout\Content;
+use App\Http\Controllers\Controller;
+use Encore\Admin\Controllers\HasResourceActions;
 
 
 class ProductsController extends Controller
@@ -83,7 +83,6 @@ class ProductsController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Product);
-
         $grid->id('Id')->sortable();
         $grid->title('商品名稱');
         $grid->on_sale('On sale')->display(function ($value) {

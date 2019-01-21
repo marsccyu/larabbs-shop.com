@@ -9,7 +9,7 @@ Route::group([
     'namespace'     => config('admin.route.namespace'),
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
-    
+
     $router->get('/', 'HomeController@index');
     $router->get('users', 'UsersController@index');
 
@@ -19,4 +19,5 @@ Route::group([
     $router->get('products/{id}/edit', 'ProductsController@edit');
     $router->put('products/{id}', 'ProductsController@update');
 
+    $router->get('orders', 'OrdersController@index')->name('admin.orders.index');
 });
