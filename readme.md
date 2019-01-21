@@ -5,6 +5,7 @@
 * [Sweetalert](http://mishengqiang.com/sweetalert/) : 美化瀏覽器彈出視窗 (npm)  
 * [Laravel-Admin](https://github.com/z-song/laravel-admin) : 管理後台  
 * [Redis](https://redis.io/) : Redis (6.5節中隊列驅動需使用)
+* [Yansongda/pay](https://github.com/yansongda/pay) : 封裝了支付寶和微信支付的接口
 
 <br>
 
