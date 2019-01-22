@@ -198,8 +198,11 @@ class OrdersController extends Controller
         }
         // 是否同意退款
         if ($request->input('agree')) {
-            // 同意退款的逻辑这里先留空
-            // todo
+            $refundNo = Order::getAvailableRefundNo();
+            $order->update([
+                'refund_no' => $refundNo,
+                'refund_status' => Order::REFUND_STATUS_SUCCESS,
+            ]);
         } else {
             // 将拒绝退款理由放到订单的 extra 字段中
             $extra = $order->extra ?: [];
