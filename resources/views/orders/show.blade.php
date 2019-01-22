@@ -75,7 +75,6 @@
                             </div>
                             <div>
                                 <span>訂單狀態：</span>
-
                                 <div class="value">
                                     @if($order->paid_at)
                                         @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
