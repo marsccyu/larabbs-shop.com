@@ -12,9 +12,34 @@ use App\Http\Requests\OrderRequest;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Http\Requests\SendReviewRequest;
+use App\Http\Requests\ApplyRefundRequest;
 
 class OrdersController extends Controller
 {
+    public function applyRefund(Order $order, ApplyRefundRequest $request)
+    {
+        // 校验订单是否属于当前用户
+        $this->authorize('own', $order);
+        // 判断订单是否已付款
+        if (!$order->paid_at) {
+            throw new InvalidRequestException('該訂單未付款，無法退款');
+        }
+        // 判断订单退款状态是否正确
+        if ($order->refund_status !== Order::REFUND_STATUS_PENDING) {
+            throw new InvalidRequestException('該訂單已經申請退款，請勿重新申請');
+        }
+        // 将用户输入的退款理由放到订单的 extra 字段中
+        $extra                  = $order->extra ?: [];
+        $extra['refund_reason'] = $request->input('reason');
+        // 将订单退款状态改为已申请退款
+        $order->update([
+            'refund_status' => Order::REFUND_STATUS_APPLIED,
+            'extra'         => $extra,
+        ]);
+
+        return $order;
+    }
+
     public function index(Request $request)
     {
         $orders = Order::query()
