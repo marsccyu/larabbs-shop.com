@@ -10,9 +10,9 @@ laravel的事件功能實際上更傾向是一種管理手段，並不是沒了�
 
 監聽器 :   `app/Listeners/UpdateProductRating.php`
 
-觸發 : 客戶對訂單(**Order**)內的資料留下評價(**OrdersController::sendReview()**)後，觸發計算並更新商品的評價及評分(**UpdateProductRating**)。
+觸發 : 客戶對訂單(`Order`)內的資料留下評價(`OrdersController::sendReview()`)後，觸發計算並更新商品的評價及評分(`UpdateProductRating`)。
 
-透過註冊事件將"事件"綁定"監聽器"，並在監聽器的 **handle** 方法中進行邏輯處理。
+透過註冊事件將"事件"綁定"監聽器"，並在監聽器的 `handle` 方法中進行邏輯處理。
 
 > 事件用處在"解耦"，例如用戶註冊完成(Event)後須完成的事項(Listeners) : 寄送 Mail、發送簡訊等等。
 >
@@ -26,9 +26,9 @@ laravel的事件功能實際上更傾向是一種管理手段，並不是沒了�
 
 Laravel 會用當前時間加上任務的延遲時間計算出任務應該被執行的時間戳，然後將這個時間戳和任務信息序列化之後存入隊列，Laravel 的隊列處理器會不斷查詢並執行隊列中滿足預計執行時間等於或早於當前時間的任務。
 
-將訂單成立邏輯包裝於 **Services/Services/OrderService::store()** 內，若在 Controller 中透過 **CloseOrder::dispatch();** 分發任務，
+將訂單成立邏輯包裝於 `Services/Services/OrderService::store()` 內，若在 Controller 中透過 `CloseOrder::dispatch();` 分發任務，
 
-在 Services 內直接用 **dispatch(new CloseOrder())** 分發任務，最後啟動隊列處理器 : 
+在 Services 內直接用 `dispatch(new CloseOrder())` 分發任務，最後啟動隊列處理器 : 
 
 ```
 php artisan queue:work
