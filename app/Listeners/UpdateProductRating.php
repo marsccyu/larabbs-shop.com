@@ -8,6 +8,7 @@ use App\Events\OrderReviewed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+// 添加 implements ShouldQueue 便可以將事件加入隊列非同步進行
 class UpdateProductRating implements ShouldQueue
 {
     /**
