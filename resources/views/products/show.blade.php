@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-sm-7">
                             <div class="title">{{ $product->title }}</div>
-                            <div class="price"><label>價格</label><em>￥</em><span>{{ $product->price }}</span></div>
+                            <div class="price"><label>價格</label><em>$ </em><span>{{ $product->price }}</span></div>
                             <div class="sales_and_reviews">
                                 <div class="sold_count">累積銷售量 <span class="count">{{ $product->sold_count }}</span>
                                 </div>
