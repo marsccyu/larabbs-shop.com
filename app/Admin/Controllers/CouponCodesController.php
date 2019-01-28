@@ -53,7 +53,7 @@ class CouponCodesController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
+            ->header('編輯優惠券')
             ->description('description')
             ->body($this->form()->edit($id));
     }
@@ -67,7 +67,7 @@ class CouponCodesController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
+            ->header('新增優惠券')
             ->description('description')
             ->body($this->form());
     }
@@ -137,16 +137,43 @@ class CouponCodesController extends Controller
     {
         $form = new Form(new CouponCode);
 
-        $form->text('name', 'Name');
-        $form->text('code', 'Code');
-        $form->text('type', 'Type');
-        $form->decimal('value', 'Value');
-        $form->number('total', 'Total');
-        $form->number('used', 'Used');
-        $form->decimal('min_amount', 'Min amount');
-        $form->datetime('not_before', 'Not before')->default(date('Y-m-d H:i:s'));
-        $form->datetime('not_after', 'Not after')->default(date('Y-m-d H:i:s'));
-        $form->switch('enabled', 'Enabled');
+        $form->display('id', 'ID');
+        $form->text('name', '名稱')->rules('required');
+
+        $form->text('code', '優惠碼')->rules(function($form) {
+            // 如果 $form->model()->id 不为空，代表是编辑操作
+            if ($id = $form->model()->id) {
+                // EX : unique:table,column,except,idColumn => 強迫 Unique 規則忽略特定 ID
+                return 'nullable|unique:coupon_codes,code,'.$id.',id';
+            } else {
+                return 'nullable|unique:coupon_codes';
+            }
+        });
+
+        $form->radio('type', '類型')->options(CouponCode::$typeMap)->rules('required');
+        $form->text('value', '折扣')->rules(function ($form) {
+            if ($form->model()->type === CouponCode::TYPE_PERCENT) {
+                // 如果选择了百分比折扣类型，那么折扣范围只能是 1 ~ 99
+                return 'required|numeric|between:1,99';
+            } else {
+                // 否则只要大等于 0.01 即可
+                return 'required|numeric|min:0.01';
+            }
+        });
+
+
+
+        $form->text('total', '總量')->rules('required|numeric|min:0');
+        $form->text('min_amount', '最低金額')->rules('required|numeric|min:0');
+        $form->datetime('not_before', '開始時間');
+        $form->datetime('not_after', '結束時間');
+        $form->radio('enabled', '啟用')->options(['1' => '是', '0' => '否']);
+
+        $form->saving(function (Form $form) {
+            if (!$form->code) {
+                $form->code = CouponCode::findAvailableCode();
+            }
+        });
 
         return $form;
     }
