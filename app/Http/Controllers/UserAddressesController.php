@@ -15,6 +15,7 @@ class UserAddressesController extends Controller
 
     public function destroy(UserAddress $user_address)
     {
+        // 獲取第二個參數 $user_address 的類名: App\Models\UserAddress，然後在 AuthServiceProvider 類的 $policies 屬性中尋找對應的策略
         $this->authorize('own', $user_address);
 
         $user_address->delete();

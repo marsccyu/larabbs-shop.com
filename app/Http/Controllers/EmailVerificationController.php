@@ -19,6 +19,7 @@ class EmailVerificationController extends Controller
         if ($user->email_verified) {
             throw new InvalidRequestException('您已經驗證過郵件了');
         }
+
         // 调用 notify() 方法用来发送我们定义好的通知类
         $user->notify(new EmailVerificationNotification());
 

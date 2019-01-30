@@ -9,24 +9,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified',
     ];
 
+    // 將數據庫字段值轉換為常見的數據類型，$casts 屬性應是一個數組，且數組的鍵是那些需要被轉換的字段名，
+    // 值則是你希望轉換的數據類型。
     protected $casts = [
         'email_verified' => 'boolean',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
