@@ -45,5 +45,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // 優惠券
         Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
+
+        // 測試關聯
+        Route::get('topics/', 'TopicsController@index')->name('topics.index');
     });
 });
