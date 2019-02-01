@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\OrderItem;
+use App\Exceptions\InvalidRequestException;
 
 class ProductsController extends Controller
 {

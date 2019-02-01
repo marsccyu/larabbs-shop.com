@@ -21,6 +21,8 @@ class AddCartRequest extends Request
                  * 閉包校驗規則，閉包接受 3 個參數，分別是參數名、參數值和錯誤回調
                  * https://laravel-china.org/docs/laravel/5.6/validation/1372#using-closures
                  */
+                // 在 AJAX 的請求中使用 validate 方法時，Laravel 並不會生成一個重定向響應，而是會生成一個包含所有驗證錯誤信息的 JSON 響應。
+                // 這個 JSON 響應會包含一個 HTTP 狀態碼 422 被發送出去。
                 function ($attribute, $value, $fail) {
                     if (!$sku = ProductSku::find($value)) {
                         return $fail('商品不存在');

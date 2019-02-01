@@ -51,7 +51,7 @@
                                 @else
                                     <button class="btn btn-success btn-favor">❤ 收藏</button>
                                 @endif
-                                <button class="btn btn-primary btn-add-to-cart">加入购物车</button>
+                                <button class="btn btn-primary btn-add-to-cart">加入購物車</button>
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                             swal('請先登入', '', 'error');
 
                         } else if (error.response.status === 422) {
-
+                            console.log('this way');
                             // http 状态码为 422 代表用户输入校验失败
                             var html = '<div>';
                             _.each(error.response.data.errors, function (errors) {
