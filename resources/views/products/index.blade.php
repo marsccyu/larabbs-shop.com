@@ -43,6 +43,7 @@
                             </div>
                         @endforeach
                     </div>
+                    <!-- appends() 方法接受一個 Key-Value 形式的數組作為參數，在生成分頁鏈接的時候會把這個數組格式化成查詢參數 -->
                     <div class="pull-right">{{ $products->appends($filters)->render() }}</div>
                 </div>
             </div>

@@ -19,10 +19,12 @@ class ProductsController extends Controller
     public function favor(Product $product, Request $request)
     {
         $user = $request->user();
+        // 判斷當前用戶是否已經收藏了此商品，如果已經收藏則不做任何操作直接返回，否則通過 attach() 方法將當前用戶和此商品關聯起來。
         if ($user->favoriteProducts()->find($product->id)) {
             return [];
         }
 
+        // attach() 方法的參數可以是模型的 id，也可以是模型對象本身，因此這裡還可以寫成 attach($product->id)。
         $user->favoriteProducts()->attach($product);
 
         return [];
