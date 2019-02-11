@@ -85,7 +85,7 @@ class ProductsController extends Controller
         $grid = new Grid(new Product);
         $grid->id('Id')->sortable();
         $grid->title('商品名稱');
-        $grid->on_sale('On sale')->display(function ($value) {
+        $grid->on_sale('上架')->display(function ($value) {
             return $value ? '是' : '否';
         });;
         $grid->rating('評分');

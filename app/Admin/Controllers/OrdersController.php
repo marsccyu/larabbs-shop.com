@@ -28,6 +28,7 @@ class OrdersController extends Controller
     {
         return $content
             ->header('查看訂單')
+            // 採用自定義頁面的方式來展示訂單，body 方法可以接受 Laravel 的視圖作為參數
             ->body(view('admin.orders.show', ['order' => $order]));
     }
 

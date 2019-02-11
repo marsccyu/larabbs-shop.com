@@ -31,6 +31,10 @@ class UpdateProductRating implements ShouldQueue
                 ->whereHas('order', function ($query) {
                     $query->whereNotNull('paid_at');
                 })
+                // first() 方法接受一個數組作為參數，代表此次SQL 要查詢出來的字段，默認情況下Laravel 會給數組裡面的值的兩邊加上` 這個符號，
+                // 比如first(['name', 'email'] ) 生成的SQL 會類似： select `name`, `email` from xxx
+                // 如果我們直接傳入 first(['count(*) as review_count', 'avg(rating) as rating']) 最後生成的 SQL 肯定是不正確的。
+                // 這裡我們用 DB::raw() 方法來解決這個問題，Laravel 在構建 SQL 的時候如果遇到 DB::raw() 就會把 DB::raw() 的參數原樣拼接到 SQL 裡。
                 ->first([
                     DB::raw('count(*) as review_count'),
                     DB::raw('avg(rating) as rating')
