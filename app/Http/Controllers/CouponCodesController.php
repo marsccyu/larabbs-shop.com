@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\CouponCode;
 use Illuminate\Http\Request;
+use App\Exceptions\CouponCodeUnavailableException;
 
 class CouponCodesController extends Controller
 {

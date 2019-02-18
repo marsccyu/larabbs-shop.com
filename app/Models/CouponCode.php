@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\CouponCodeUnavailableException;
