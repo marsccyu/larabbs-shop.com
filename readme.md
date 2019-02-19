@@ -1,3 +1,12 @@
+
+- 耗時較長的任務(如Mail)，透過 Listeners 解耦程式，適合不需要獲得返回值並且耗時較長的任務。
+- 人為造成的異常(如重複驗證信箱)不影響系統運作，故不需紀錄在 Log 內，將不需紀錄在 Log 內的異常寫入 `app/Exceptions/Handler.php` 中。
+- 系統異常如MySQL連線失敗或異常，須適度提供訊息給用戶並記錄在 Log 內。
+- MySQL 內跟"金錢"有關的欄位需使用 decimal 型態儲存。 
+- 在 Request 內可以透過閉包校驗數據。
+- 使用任務時需要先將 .env 內的隊列驅動由 Sync(同步) 改為 redis，並安裝 `predis/predis`
+
+
 # Event / Listeners 
 
 參考[這篇](https://laravel-china.org/articles/20712)
