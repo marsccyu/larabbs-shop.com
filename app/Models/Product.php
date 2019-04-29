@@ -15,6 +15,11 @@ class Product extends Model
         'on_sale' => 'boolean', // on_sale 是一個布林值
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     // Laravel 訪問器 ( https://laravelacademy.org/post/8213.html )
     public function getImageUrlAttribute()
     {
