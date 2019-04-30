@@ -9,12 +9,10 @@
                     <!-- 筛选组件开始 -->
                     <div class="row">
                         <form action="{{ route('products.index') }}" class="form-inline search-form">
-
                             <!-- 面包屑开始 -->
-                            <div class="col-auto category-breadcrumb">
-                                <!-- 添加一个名为 全部 的链接，直接跳转到商品列表页 -->
-                                <a class="all-products" href="{{ route('products.index') }}">全部</a> >
-                                <!-- 如果当前是通过类目筛选的 -->
+                            <!-- 添加一个名为 全部 的链接，直接跳转到商品列表页 -->
+                            <a class="all-products" href="{{ route('products.index') }}">全部</a> &gt;
+                            <!-- 如果当前是通过类目筛选的 -->
                             @if ($category)
                                 <!-- 遍历这个类目的所有祖先类目，我们在模型的访问器中已经排好序，因此可以直接使用 -->
                                 @foreach($category->ancestors as $ancestor)
@@ -22,14 +20,13 @@
                                         <span class="category">
                                             <a href="{{ route('products.index', ['category_id' => $ancestor->id]) }}">{{ $ancestor->name }}</a>
                                         </span>
-                                        <span>&gt;</span>
+                                        <span>></span>
                                 @endforeach
                                 <!-- 最后展示出当前类目名称 -->
                                     <span class="category">{{ $category->name }}</span><span> ></span>
                                     <!-- 当前类目的 ID，当用户调整排序方式时，可以保证 category_id 参数不丢失 -->
                                     <input type="hidden" name="category_id" value="{{ $category->id }}">
-                                @endif
-                            </div>
+                            @endif
                             <!-- 面包屑结束 -->
 
                             <input type="text" class="form-control input-sm" name="search" placeholder="搜索">
@@ -43,12 +40,7 @@
                                 <option value="rating_desc">評價從高到低</option>
                                 <option value="rating_asc">評價從低到高</option>
                             </select>
-
-
                         </form>
-
-
-
                     </div>
                     <!-- 筛选组件结束 -->
 
@@ -56,8 +48,8 @@
                     <div class="filters">
                         <!-- 如果当前是通过类目筛选，并且此类目是一个父类目 -->
                         @if ($category && $category->is_directory)
-                            <div>
-                                <div class="col-3 filter-key">子項目：</div>
+                            <div class="">
+                                <div class="col-3 filter-key">子类目：</div>
                                 <div class="col-9 filter-values">
                                     <!-- 遍历直接子类目 -->
                                     @foreach($category->children as $child)
