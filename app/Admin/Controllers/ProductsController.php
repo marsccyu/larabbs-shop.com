@@ -6,6 +6,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Models\Product;
+use App\Models\Category;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
@@ -83,8 +84,12 @@ class ProductsController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Product);
+        $grid->model()->with(['category']);
+
         $grid->id('Id')->sortable();
         $grid->title('商品名稱');
+        $grid->column('category.name', '分類');
+
         $grid->on_sale('上架')->display(function ($value) {
             return $value ? '是' : '否';
         });;
@@ -142,6 +147,15 @@ class ProductsController extends Controller
         $form = new Form(new Product);
 
         $form->text('title', '商品名稱')->rules('required');
+
+        // 添加一个分類字段，与之前分類管理类似，使用 Ajax 的方式来搜索添加
+        $form->select('category_id', '分類')->options(function ($id) {
+            $category = Category::find($id);
+            if ($category) {
+                return [$category->id => $category->full_name];
+            }
+        })->ajax('/admin/api/categories?is_directory=0');
+
         $form->image('image', '封面圖片')->rules('required|image');
         $form->textarea('description', '描述')->rules('required');
         $form->switch('on_sale', '上架')->options(['1' => '是', '0'=> '否'])->default('0');
