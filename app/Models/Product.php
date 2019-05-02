@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    const TYPE_NORMAL = 'normal';
+    const TYPE_CROWDFUNDING = 'crowdfunding';
+    public static $typeMap = [
+        self::TYPE_NORMAL  => '普通商品',
+        self::TYPE_CROWDFUNDING => '眾籌商品',
+    ];
+
     protected $fillable = [
         'title', 'description', 'image', 'on_sale',
-        'rating', 'sold_count', 'review_count', 'price'
+        'rating', 'sold_count', 'review_count', 'price', 'type'
     ];
     protected $casts = [
         'on_sale' => 'boolean', // on_sale 是一個布林值
@@ -37,5 +44,9 @@ class Product extends Model
         return $this->hasMany(ProductSku::class);
     }
 
+    public function crowdfunding()
+    {
+        return $this->hasOne(CrowdfundingProduct::class);
+    }
 
 }
