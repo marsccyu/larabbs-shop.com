@@ -18,6 +18,9 @@ class UserAddress extends Model
     ];
     protected $dates = ['last_used_at'];
 
+    // 序列話 full_saddress 訪問器，才可以在 show.blade.php 的地址清單中顯示出來
+    protected $appends = ['full_address'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

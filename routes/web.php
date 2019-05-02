@@ -48,5 +48,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // 測試關聯
         Route::get('topics/', 'TopicsController@index')->name('topics.index');
+
+        // 眾籌
+        Route::post('crowdfunding_orders', 'OrdersController@crowdfunding')->name('crowdfunding_orders.store');
     });
 });
