@@ -8,6 +8,7 @@ use App\Listeners\RegisteredListener;
 use App\Listeners\UpdateProductRating;
 use Illuminate\Auth\Events\Registered;
 use App\Events\OrderReviewed;
+use App\Listeners\UpdateCrowdfundingProductProgress;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderReviewed::class => [
             UpdateProductRating::class,
+            UpdateCrowdfundingProductProgress::class,
         ],
     ];
 

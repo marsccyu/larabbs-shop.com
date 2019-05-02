@@ -170,6 +170,11 @@ class OrdersController extends Controller
         if ($order->ship_status !== Order::SHIP_STATUS_PENDING) {
             throw new InvalidRequestException('該訂單已發貨');
         }
+        // 众筹订单只有在众筹成功之后发货
+        if ($order->type === Order::TYPE_CROWDFUNDING &&
+            $order->items[0]->product->crowdfunding->status !== CrowdfundingProduct::STATUS_SUCCESS) {
+            throw new InvalidRequestException('眾籌訂單只能在眾籌完成後發貨');
+        }
         // Laravel 5.5 之后 validate 方法可以返回校验过的值
         $data = $this->validate($request, [
             'express_company' => ['required'],
