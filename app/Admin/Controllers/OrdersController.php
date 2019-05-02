@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\InvalidRequestException;
 use Encore\Admin\Controllers\HasResourceActions;
 use App\Http\Requests\Admin\HandleRefundRequest;
+use App\Services\OrderService;
 
 class OrdersController extends Controller
 {
@@ -196,7 +197,7 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
-    public function handleRefund(Order $order, HandleRefundRequest $request)
+    public function handleRefund(Order $order, HandleRefundRequest $request, OrderService $orderService)
     {
         // 判断订单状态是否正确
         if ($order->refund_status !== Order::REFUND_STATUS_APPLIED) {
@@ -204,11 +205,7 @@ class OrdersController extends Controller
         }
         // 是否同意退款
         if ($request->input('agree')) {
-            $refundNo = Order::getAvailableRefundNo();
-            $order->update([
-                'refund_no' => $refundNo,
-                'refund_status' => Order::REFUND_STATUS_SUCCESS,
-            ]);
+            $orderService->refundOrder($order);
         } else {
             // 将拒绝退款理由放到订单的 extra 字段中
             $extra = $order->extra ?: [];
