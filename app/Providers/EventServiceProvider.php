@@ -29,6 +29,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             RegisteredListener::class,
         ],
+        /**
+         * 這裡與教程有些不同，原教程會使用到支付模組所以會變成 OrderPaid::class => [] ...
+         * 但我沒有使用到支付模組故仍使用 OrderReviewed 事件
+         */
         OrderReviewed::class => [
             UpdateProductRating::class,
             UpdateCrowdfundingProductProgress::class,
